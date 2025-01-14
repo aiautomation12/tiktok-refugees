@@ -133,22 +133,51 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
   
           {/* About You */}
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 border-b-2 border-[#17616f] pb-2 mb-4">
-              About You
-            </h3>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">I am known for</label>
-              <textarea
-                name="knownFor"
-                value={formData.knownFor}
-                onChange={handleChange}
-                placeholder="Tell us what makes you unique..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                rows="4"
-                required
-              />
-            </div>
-          </div>
+  <h3 className="text-xl font-semibold text-gray-800 border-b-2 border-[#17616f] pb-2 mb-4">
+    About You
+  </h3>
+  <div className="space-y-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">Known For (1)</label>
+      <input
+        type="text"
+        name="knownFor_1"
+        value={formData.knownFor_1}
+        onChange={handleChange}
+        maxLength={20}
+        placeholder="First thing you're known for..."
+        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
+        required
+      />
+    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">Known For (2)</label>
+      <input
+        type="text"
+        name="knownFor_2"
+        value={formData.knownFor_2}
+        onChange={handleChange}
+        maxLength={20}
+        placeholder="Second thing you're known for..."
+        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
+        required
+      />
+    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">Known For (3)</label>
+      <input
+        type="text"
+        name="knownFor_3"
+        value={formData.knownFor_3}
+        onChange={handleChange}
+        maxLength={20}
+        placeholder="Third thing you're known for..."
+        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
+        required
+      />
+    </div>
+  </div>
+</div>
         </div>
   
         {/* Form Actions - Fixed at bottom */}

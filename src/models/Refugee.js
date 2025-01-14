@@ -9,7 +9,9 @@ const refugeeSchema = new mongoose.Schema({
   snapchatUsername: { type: String, required: true },
   flipUsername: { type: String, required: true },
   linkedinBio: { type: String, required: true },
-  knownFor: { type: String, required: true },
+  knownFor_1: { type: String, maxlength: 20, required: true },
+  knownFor_2: { type: String, maxlength: 20, required: true },
+  knownFor_3: { type: String, maxlength: 20, required: true },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

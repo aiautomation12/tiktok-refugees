@@ -81,25 +81,26 @@ const RefugeeCard = ({ refugee }) => {
         />
 
         {/* Known For Section */}
-        <div className="mt-4 pt-4 border-t border-gray-200">
+     {/* Known For Section */}
+<div className="mt-4 pt-4 border-t border-gray-200">
   <h4 className="text-sm font-bold text-gray-700 mb-2">Known For:</h4>
   <div className="space-y-2">
     <div className="flex items-start">
       <span className="text-gray-600 text-sm w-5 flex-shrink-0">1.</span>
-      <p className="text-gray-600 text-sm overflow-wrap-break-word break-all">
-        {refugee.knownFor}
+      <p className="text-gray-600 text-sm overflow-wrap-break-word">
+        {refugee.knownFor_1}
       </p>
     </div>
     <div className="flex items-start">
       <span className="text-gray-600 text-sm w-5 flex-shrink-0">2.</span>
-      <p className="text-gray-600 text-sm overflow-wrap-break-word break-all">
-        {refugee.knownFor}
+      <p className="text-gray-600 text-sm overflow-wrap-break-word">
+        {refugee.knownFor_2}
       </p>
     </div>
     <div className="flex items-start">
       <span className="text-gray-600 text-sm w-5 flex-shrink-0">3.</span>
-      <p className="text-gray-600 text-sm overflow-wrap-break-word break-all">
-        {refugee.knownFor}
+      <p className="text-gray-600 text-sm overflow-wrap-break-word">
+        {refugee.knownFor_3}
       </p>
     </div>
   </div>

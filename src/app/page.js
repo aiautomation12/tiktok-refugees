@@ -20,7 +20,9 @@ export default function Home() {
     snapchatUsername: "",
     flipUsername: "",
     linkedinBio: "",
-    knownFor: "",
+    knownFor_1: "",
+    knownFor_2: "",
+    knownFor_3: "",
   });
 
   useEffect(() => {
@@ -85,7 +87,9 @@ export default function Home() {
           snapchatUsername: "",
           flipUsername: "",
           linkedinBio: "",
-          knownFor: "",
+          knownFor_1: "",
+          knownFor_2: "",
+          knownFor_3: "",
         });
         fetchRefugees();
       }
