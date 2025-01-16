@@ -14,11 +14,13 @@ export async function POST(req) {
 
     await connectDB();
     const user = await User.findOne({ email: session.user.email });
-    
-    const data = await req.json();
-    data.user = user._id;
-    
-    const refugee = await Refugee.create(data);
+
+    const formData = await req.json();
+    const refugee = await Refugee.create({
+      ...formData,
+      user: user._id
+    });
+
     return NextResponse.json(refugee);
   } catch (error) {
     console.error("Error creating refugee:", error);
@@ -31,29 +33,50 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 10;
-    const search = searchParams.get("search") || "";
+    const nameSearch = searchParams.get("nameSearch") || "";
+    const socialSearch = searchParams.get("socialSearch") || "";
+    const categorySearch = searchParams.get("categorySearch") || "";
     const skip = (page - 1) * limit;
 
     await connectDB();
 
-    let query = {};
+    let query = { $and: [] };
     
-    if (search) {
-      query = {
+    if (nameSearch) {
+      query.$and.push({
         $or: [
-          { firstName: { $regex: search, $options: 'i' } },
-          { lastName: { $regex: search, $options: 'i' } },
-          { tiktokUsername: { $regex: search, $options: 'i' } },
-          { instagramUsername: { $regex: search, $options: 'i' } },
-          { redNoteUsername: { $regex: search, $options: 'i' } },
-          { snapchatUsername: { $regex: search, $options: 'i' } },
-          { flipUsername: { $regex: search, $options: 'i' } },
-          { linkedinBio: { $regex: search, $options: 'i' } },
-          { knownFor_1: { $regex: search, $options: 'i' } },
-          { knownFor_2: { $regex: search, $options: 'i' } },
-          { knownFor_3: { $regex: search, $options: 'i' } }
+          { firstName: { $regex: nameSearch, $options: 'i' } },
+          { lastName: { $regex: nameSearch, $options: 'i' } }
         ]
-      };
+      });
+    }
+
+    if (socialSearch) {
+      query.$and.push({
+        $or: [
+          { youtubeUsername: { $regex: socialSearch, $options: 'i' } },
+          { tiktokUsername: { $regex: socialSearch, $options: 'i' } },
+          { instagramUsername: { $regex: socialSearch, $options: 'i' } },
+          { redNoteUsername: { $regex: socialSearch, $options: 'i' } },
+          { snapchatUsername: { $regex: socialSearch, $options: 'i' } },
+          { flipUsername: { $regex: socialSearch, $options: 'i' } }
+        ]
+      });
+    }
+
+    if (categorySearch) {
+      query.$and.push({
+        $or: [
+          { knownFor_1: { $regex: categorySearch, $options: 'i' } },
+          { knownFor_2: { $regex: categorySearch, $options: 'i' } },
+          { knownFor_3: { $regex: categorySearch, $options: 'i' } }
+        ]
+      });
+    }
+
+    // If no search parameters, remove the $and operator
+    if (query.$and.length === 0) {
+      query = {};
     }
 
     const totalCount = await Refugee.countDocuments(query);

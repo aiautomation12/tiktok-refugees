@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const refugeeSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  youtubeUsername: { type: String, required: true },
   tiktokUsername: { type: String, required: true },
   instagramUsername: { type: String, required: true },
   redNoteUsername: { type: String, required: true },
