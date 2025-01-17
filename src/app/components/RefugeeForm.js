@@ -1,6 +1,94 @@
-export default function RefugeeForm({ formData, handleChange, handleSubmit, onCancel }) {
+import { useState } from 'react';
+import { toast } from 'react-hot-toast';
+
+export default function RefugeeForm({ 
+  formData, 
+  handleChange, 
+  handleSubmit, 
+  onCancel, 
+  isUpdate = false,
+  isLoading = false 
+}) {
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Validate name fields
+    if (!formData.firstName?.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    if (!formData.lastName?.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+
+    // Validate usernames
+    if (!formData.youtubeUsername?.trim()) {
+      newErrors.youtubeUsername = 'YouTube username is required';
+    }
+    if (!formData.tiktokUsername?.trim()) {
+      newErrors.tiktokUsername = 'TikTok username is required';
+    }
+
+    // Validate known for fields
+    if (!formData.knownFor_1?.trim()) {
+      newErrors.knownFor_1 = 'This field is required';
+    }
+    if (!formData.knownFor_2?.trim()) {
+      newErrors.knownFor_2 = 'This field is required';
+    }
+    if (!formData.knownFor_3?.trim()) {
+      newErrors.knownFor_3 = 'This field is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      toast.error('Please fill in all required fields correctly');
+      return;
+    }
+    handleSubmit(e);
+  };
+
+  const renderInput = (label, name, placeholder, maxLength = undefined) => {
+    const isUsername = name.toLowerCase().includes('username');
+    return (
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+          <span className="text-red-500 ml-1">*</span>
+        </label>
+        <div className={`relative ${isUsername ? 'mt-1' : ''}`}>
+          {isUsername && (
+            <span className="absolute left-3 top-2.5 text-gray-500">@</span>
+          )}
+          <input
+            type="text"
+            name={name}
+            value={formData[name] || ''}
+            onChange={handleChange}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            className={`w-full ${isUsername ? 'pl-8' : 'px-4'} py-2.5 rounded-lg border
+              ${errors[name] ? 'border-red-500' : 'border-gray-300'}
+              focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20
+              disabled:bg-gray-50 disabled:text-gray-500`}
+            disabled={isLoading}
+          />
+          {errors[name] && (
+            <p className="mt-1 text-sm text-red-500">{errors[name]}</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <form onSubmit={onSubmit} className="max-h-[calc(100vh-8rem)] overflow-y-auto">
       <div className="p-6 space-y-6">
         {/* Personal Information */}
         <div>
@@ -8,30 +96,8 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
             Personal Information
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="Enter your first name"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Enter your last name"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div>
+            {renderInput('First Name', 'firstName', 'Enter your first name')}
+            {renderInput('Last Name', 'lastName', 'Enter your last name')}
           </div>
         </div>
 
@@ -41,108 +107,8 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
             Social Media Profiles
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">YouTube Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="youtubeUsername"
-                  value={formData.youtubeUsername}
-                  onChange={handleChange}
-                  placeholder="your.youtube.username"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">TikTok Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="tiktokUsername"
-                  value={formData.tiktokUsername}
-                  onChange={handleChange}
-                  placeholder="your.tiktok.username"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Instagram Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="instagramUsername"
-                  value={formData.instagramUsername}
-                  onChange={handleChange}
-                  placeholder="your.instagram"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">RedNote Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="redNoteUsername"
-                  value={formData.redNoteUsername}
-                  onChange={handleChange}
-                  placeholder="your.rednote"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">SnapChat Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="snapchatUsername"
-                  value={formData.snapchatUsername}
-                  onChange={handleChange}
-                  placeholder="your.snapchat"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Flip Username</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">@</span>
-                <input
-                  type="text"
-                  name="flipUsername"
-                  value={formData.flipUsername}
-                  onChange={handleChange}
-                  placeholder="your.flip.username"
-                  className="w-full pl-8 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn Bio</label>
-              <input
-                type="text"
-                name="linkedinBio"
-                value={formData.linkedinBio}
-                onChange={handleChange}
-                placeholder="Your LinkedIn profile URL"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div> */}
+            {renderInput('YouTube Username', 'youtubeUsername', 'your.youtube.username')}
+            {renderInput('TikTok Username', 'tiktokUsername', 'your.tiktok.username')}
           </div>
         </div>
 
@@ -152,45 +118,9 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
             About You
           </h3>
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Known For (1)</label>
-              <input
-                type="text"
-                name="knownFor_1"
-                value={formData.knownFor_1}
-                onChange={handleChange}
-                maxLength={50}
-                placeholder="First thing you're known for..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Known For (2)</label>
-              <input
-                type="text"
-                name="knownFor_2"
-                value={formData.knownFor_2}
-                onChange={handleChange}
-                maxLength={50}
-                placeholder="Second thing you're known for..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Known For (3)</label>
-              <input
-                type="text"
-                name="knownFor_3"
-                value={formData.knownFor_3}
-                onChange={handleChange}
-                maxLength={50}
-                placeholder="Third thing you're known for..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
-                required
-              />
-            </div>
+            {renderInput('Known For (1)', 'knownFor_1', 'First thing you\'re known for...', 50)}
+            {renderInput('Known For (2)', 'knownFor_2', 'Second thing you\'re known for...', 50)}
+            {renderInput('Known For (3)', 'knownFor_3', 'Third thing you\'re known for...', 50)}
           </div>
         </div>
       </div>
@@ -201,15 +131,25 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            disabled={isLoading}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 bg-[#17616f] text-white rounded-lg hover:bg-[#124c57] transition-colors"
+            className="px-6 py-2.5 bg-[#17616f] text-white rounded-lg hover:bg-[#124c57] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : isUpdate ? 'Update' : 'Submit'}
           </button>
         </div>
       </div>

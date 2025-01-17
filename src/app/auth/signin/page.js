@@ -6,7 +6,7 @@ export default function SignIn() {
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
       <div className="w-[320px] px-8 py-6 bg-white rounded-3xl shadow-lg">
         <h1 className="text-2xl font-bold text-center text-[#1f1f1f] mb-6">
-          Welcome Back
+          Welcome to Tik2Tube
         </h1>
         <div className="space-y-4">
           <button
