@@ -16,8 +16,21 @@ export async function POST(req) {
     const user = await User.findOne({ email: session.user.email });
 
     const formData = await req.json();
+    const { firstName, lastName, tiktokUsername, youtubeUsername, knownFor_1, knownFor_2, knownFor_3 } = formData;
+
     const refugee = await Refugee.create({
-      ...formData,
+      firstName,
+      lastName,
+      tiktokUsername,
+      youtubeUsername,
+      instagramUsername: null,
+      redNoteUsername: null,
+      snapchatUsername: null,
+      flipUsername: null,
+      linkedinBio: null,
+      knownFor_1,
+      knownFor_2,
+      knownFor_3,
       user: user._id
     });
 
@@ -41,7 +54,7 @@ export async function GET(req) {
     await connectDB();
 
     let query = { $and: [] };
-    
+
     if (nameSearch) {
       query.$and.push({
         $or: [
@@ -55,11 +68,7 @@ export async function GET(req) {
       query.$and.push({
         $or: [
           { youtubeUsername: { $regex: socialSearch, $options: 'i' } },
-          { tiktokUsername: { $regex: socialSearch, $options: 'i' } },
-          { instagramUsername: { $regex: socialSearch, $options: 'i' } },
-          { redNoteUsername: { $regex: socialSearch, $options: 'i' } },
-          { snapchatUsername: { $regex: socialSearch, $options: 'i' } },
-          { flipUsername: { $regex: socialSearch, $options: 'i' } }
+          { tiktokUsername: { $regex: socialSearch, $options: 'i' } }
         ]
       });
     }

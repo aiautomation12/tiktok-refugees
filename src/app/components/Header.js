@@ -16,13 +16,11 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-3">
+      <div className="max-w-7xl mx-auto px-4 ">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-[#17616f]">
-              TikTok Refugees
-            </span>
+            <Image src="/logo-02.png" alt="TikTok Refugees" width={300} height={50} priority quality={50} />
           </Link>
 
           {/* Auth Button or User Profile */}
@@ -47,7 +45,7 @@ const Header = () => {
                       {session.user.name?.[0]?.toUpperCase() || 'U'}
                     </div>
                   )}
-                  <span className="text-gray-700 font-medium">
+                  <span className="text-gray-700 font-medium text-xl">
                     {session.user.name}
                   </span>
                 </button>
@@ -55,7 +53,6 @@ const Header = () => {
                 {/* Enhanced Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border">
-                  
                     <button
                       onClick={handleSignOut}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"

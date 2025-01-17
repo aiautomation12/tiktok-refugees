@@ -71,7 +71,7 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
                 />
               </div>
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Instagram Username</label>
               <div className="relative">
                 <span className="absolute left-3 top-2.5 text-gray-500">@</span>
@@ -142,7 +142,7 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
                 required
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -159,7 +159,7 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
                 name="knownFor_1"
                 value={formData.knownFor_1}
                 onChange={handleChange}
-                maxLength={20}
+                maxLength={50}
                 placeholder="First thing you're known for..."
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
                 required
@@ -172,7 +172,7 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
                 name="knownFor_2"
                 value={formData.knownFor_2}
                 onChange={handleChange}
-                maxLength={20}
+                maxLength={50}
                 placeholder="Second thing you're known for..."
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
                 required
@@ -185,7 +185,7 @@ export default function RefugeeForm({ formData, handleChange, handleSubmit, onCa
                 name="knownFor_3"
                 value={formData.knownFor_3}
                 onChange={handleChange}
-                maxLength={20}
+                maxLength={50}
                 placeholder="Third thing you're known for..."
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#17616f] focus:ring-2 focus:ring-[#17616f] focus:ring-opacity-20"
                 required

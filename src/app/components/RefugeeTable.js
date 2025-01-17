@@ -38,7 +38,7 @@ const RefugeeCard = ({ refugee, onModalOpen, searchTerms }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-3 md:p-4 border border-gray-100">
+    <div className="bg-white rounded-lg shadow-md p-3 md:p-4 border border-gray-100 transition-transform transform hover:scale-105 hover:shadow-lg hover:bg-gray-100 hover:border-gray-300">
       <div className="flex justify-between items-center mb-2 md:mb-3">
         <h3 className="text-base md:text-lg font-semibold text-gray-800 truncate max-w-[75%]">
           <HighlightText 
@@ -46,7 +46,7 @@ const RefugeeCard = ({ refugee, onModalOpen, searchTerms }) => {
             highlight={searchTerms.nameSearch} 
           />
         </h3>
-        <ExternalLink className='cursor-pointer' onClick={() => onModalOpen(refugee)}/>
+        <ExternalLink className="cursor-pointer" onClick={() => onModalOpen(refugee)} />
       </div>
 
       <div className="space-y-1.5 md:space-y-2">
@@ -62,8 +62,6 @@ const RefugeeCard = ({ refugee, onModalOpen, searchTerms }) => {
           label="TikTok"
           highlight={searchTerms.socialSearch}
         />
-        {/* Add other social media links with highlighting */}
-
         <div className="mt-2 pt-2 md:mt-3 md:pt-3 border-t border-gray-200">
           <h4 className="text-xs font-bold text-gray-700 mb-1.5 md:mb-2">Known For:</h4>
           <div className="space-y-1">
