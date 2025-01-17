@@ -161,7 +161,14 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div
+      className="min-h-screen bg-gray-50"
+      style={{
+        backgroundImage: `url('https://i.pinimg.com/originals/0b/f2/80/0bf280388937448d38392b76c15bd441.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <div className="max-w-7xl mx-auto py-8 px-4">
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-4">

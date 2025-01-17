@@ -15,7 +15,13 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md"
+    style={{
+      backgroundImage: `url('https://i.pinimg.com/originals/0b/f2/80/0bf280388937448d38392b76c15bd441.jpg')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}
+    >
       <div className="max-w-7xl mx-auto px-4 ">
         <div className="flex items-center justify-between">
           {/* Logo */}
